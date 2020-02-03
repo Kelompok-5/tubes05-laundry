@@ -9,35 +9,36 @@ class Admin extends CI_Controller {
 		if (!$this->session->userdata('status')) {
 			redirect(base_url('auth'));
 		}
+		$this->load->library('Excel_generator');
 	}
 
 	public function index()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/selamat_datang';
 		$isi['data'] 		 = $this->db->get('user');
 		$this->load->view('admin/tampilan_admin',$isi);
 
-			
+
 	}
 
 	public function navigasi()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/navigasi';
 		$isi['data'] 		 =$this->db->select_sum('bayar');
 		$isi['data'] 		 =$this->db->get('laundry');
 		$this->load->view('admin/tampilan_admin',$isi);
 
-			
+
 	}
 
 
 	public function tambahlaundry()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/form_masuk';
 		$isi['id_laundry']	='';
@@ -54,21 +55,21 @@ class Admin extends CI_Controller {
 	}
 	public function simpanlaundry()
 	{
-	
+
 		// print_r($this->input->post());die();
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
-		
-		$key = $this->input->post('id_laundry'); 	
+
+		$key = $this->input->post('id_laundry');
 		$data['id_laundry']    = $this->input->post('id_laundry');
 		$data['nama_konsumen'] 	= $this->input->post('nama_konsumen');
 		$data['berat'] 	= $this->input->post('berat');
 		$data['status'] 		= $this->input->post('status');
 		$data['bayar'] 		= $this->input->post('bayar');
 		$data['tgl_masuk'] 	 	= $this->input->post('tgl_masuk');
-		// $data['tgl_keluar'] 	 	= $this->input->post('tgl_keluar');	
+		// $data['tgl_keluar'] 	 	= $this->input->post('tgl_keluar');
 		$data['paket_id_paket'] 		= $this->input->post('paket_id_paket');
 
-		
+
 		$query = $this->Model_laundry->getdata($key);
 
 		if($query->num_rows()>0)
@@ -93,22 +94,22 @@ class Admin extends CI_Controller {
 
 	public function paket()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/paket';
 		$isi['id_paket']	='';
 		$isi['nama_paket']='';
 		$isi['harga']='';
 		$isi['data'] 		 = $this->db->get('paket');
-		$this->load->view('admin/tampilan_admin',$isi);	
+		$this->load->view('admin/tampilan_admin',$isi);
 	}
 
 	public function editpaket()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/form_editpaket';
-		
+
 		$key = $this->uri->segment(3);
 		$this->db->where('id_paket',$key);
 		$query =$this->db->get('paket');
@@ -117,7 +118,7 @@ class Admin extends CI_Controller {
 				$isi['id_paket']	 =$row->id_paket;
 				$isi['nama_paket'] =$row->nama_paket;
 				$isi['harga'] =$row->harga;
-			
+
 			}
 		}
 		else
@@ -131,13 +132,13 @@ class Admin extends CI_Controller {
 	}
 	public function simpanadmin()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
-		
-		$key = $this->input->post('id_paket'); 	
+
+		$key = $this->input->post('id_paket');
 		$data['id_paket']    = $this->input->post('id_paket');
 		$data['nama_paket'] 	= $this->input->post('nama_paket');
-		$data['harga'] 		= $this->input->post('harga');	
+		$data['harga'] 		= $this->input->post('harga');
 
 		$this->load->model('model_paket');
 		$query = $this->model_paket->getdata($key);
@@ -162,7 +163,7 @@ class Admin extends CI_Controller {
 	}
 	public function deletepaket()
 	{
-		
+
 		$this->load->model('Model_paket');
 
 		$key = $this->uri->segment(3);
@@ -178,10 +179,10 @@ class Admin extends CI_Controller {
 	public function detailpaket()
 	{
 
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/paket';
-		
+
 		$key = $this->uri->segment(3);
 		$this->db->where('id_paket',$key);
 		$query =$this->db->get('paket');
@@ -206,22 +207,22 @@ class Admin extends CI_Controller {
 
 	public function masuk()
 	{
-		
+
 		$this->load->model('model_admin');
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/masuk';
 		$isi['data'] 		 = $this->model_admin->masuk();
 		$this->load->view('admin/tampilan_admin',$isi);
 
-			
+
 	}
 
 	public function ambillaundry()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/form_ambillaundry';
-		
+
 		$key = $this->uri->segment(3);
 		$this->db->where('id_laundry',$key);
 		$query =$this->db->get('laundry');
@@ -235,7 +236,7 @@ class Admin extends CI_Controller {
 				$isi['tgl_masuk'] =$row->tgl_masuk;
 				$isi['tgl_keluar'] =$row->tgl_keluar;
 				$isi['paket_id_paket'] =$row->paket_id_paket;
-			
+
 			}
 		}
 		else
@@ -254,13 +255,13 @@ class Admin extends CI_Controller {
 	}
 
 
-	
+
 	public function editlaundry()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/form_editlaundry';
-		
+
 		$key = $this->uri->segment(3);
 		$this->db->where('id_laundry',$key);
 		$query =$this->db->get('laundry');
@@ -274,7 +275,7 @@ class Admin extends CI_Controller {
 				$isi['tgl_masuk'] =$row->tgl_masuk;
 				$isi['tgl_keluar'] =$row->tgl_keluar;
 				$isi['paket_id_paket'] =$row->paket_id_paket;
-			
+
 			}
 		}
 		else
@@ -294,7 +295,7 @@ class Admin extends CI_Controller {
 
 	public function deletelaundrymasuk()
 	{
-		
+
 		$this->load->model('model_laundry');
 
 		$key = $this->uri->segment(3);
@@ -309,7 +310,7 @@ class Admin extends CI_Controller {
 
 	public function deletelaundry()
 	{
-		
+
 		$this->load->model('model_laundry');
 
 		$key = $this->uri->segment(3);
@@ -322,30 +323,30 @@ class Admin extends CI_Controller {
 		redirect('admin/keluar');
 	}
 
-	
+
 
 	public function keluar()
 	{
-		
+
 		$this->load->model('Model_admin');
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/keluar';
 		$isi['data'] 		 = $this->Model_admin->keluar();
 		$this->load->view('admin/tampilan_admin',$isi);
 
-			
+
 	}
 
 
 	public function rekap()
 	{
-		
+
 		$isi['nama_usr'] = $this->session->userdata('nama_usr');
 		$isi['content'] = 'admin/selamat_datang';
 		$isi['data'] 		 = $this->db->get('user');
 		$this->load->view('admin/tampilan_admin',$isi);
 
-			
+
 	}
 
 	public function akun()
@@ -358,13 +359,13 @@ class Admin extends CI_Controller {
 			$isi['nama_usr'] = $this->session->userdata('nama_usr');
 			$isi['password'] = $this->session->userdata('password');
 			$isi['level'] = $this->session->userdata('level');
-						
+
 			$isi['content'] = 'admin/form_setting';
-			$this->load->view('admin/tampilan_admin',$isi);			
+			$this->load->view('admin/tampilan_admin',$isi);
 		}
 		else
 		{
-			header('location:'.base_url().'selamat');	
+			header('location:'.base_url().'selamat');
 		}
 	}
 
@@ -379,7 +380,7 @@ public function simpan_akun()
 			$pass_lama = $this->input->post('pass_lama');
 			$pass_baru = $this->input->post('pass_baru');
 			$ulangi_pass = $this->input->post('ulangi_pass');
-			
+
 			$data['username'] = $username;
 			$data['password'] = md5($pass_lama);
 			$cek = $this->model_admin->getSelectedDataMultiple('user',$data);
@@ -475,6 +476,6 @@ public function logout() {
 		$this->session->sess_destroy();
 		$this->session->set_userdata('is_login', FALSE);
 		redirect('/');
-	} 
+	}
 
 }

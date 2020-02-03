@@ -8,18 +8,18 @@
                                     <li><a class="close-link"></a></li>
                                     <li><a class="close-link"></a></li>
                                     <li><a class="close-link"></a></li>
-                                    <!-- <a href="<?php echo base_url();?>admin/downloadmasuk"  class="btn btn-dark">Download Excel</a> -->
+                                    <a href="<?php echo base_url();?>admin/downloadmasuk"  class="btn btn-dark">Download Excel</a>
                                     <li><a class="close-link"></a></li>
-                                    <a href="<?php echo base_url();  ?>admin/tambahlaundry" class="btn btn-dark">Tambah</a>                                           </ul>  
+                                    <a href="<?php echo base_url();  ?>admin/tambahlaundry" class="btn btn-dark">Tambah</a>                                           </ul>
                                     <div class="clearfix"></div>
                                 </div>
-                                                    
-                                           
+
+
                                 <div class="x_content">
                                     <table id="example" class="table table-striped responsive-utilities jambo_table">
                                         <thead>
                                             <tr class="headings">
-                                                
+
                                                 <th>No </th>
                                                 <th>Nama Konsumen</th>
                                                 <th>Berat</th>
@@ -46,7 +46,7 @@
             <td>
 				<a href="<?php echo base_url();?>admin/ambillaundry/<?php echo $row->id_laundry; ?>" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Ambil </a>
                 <a href="<?php echo base_url();?>admin/deletelaundrymasuk/<?php echo $row->id_laundry; ?>" onclick="return confirm('anda yakin akan menghapus data ini');" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
-               
+
             </td>
         </tr>
         <?php }?>
